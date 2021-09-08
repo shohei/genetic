@@ -54,21 +54,21 @@ class Population():
                 self.nextInd[i].chrom[j] = self.ind[i].chrom[j]
 
         for i in range(POP_SIZE):
-            p1 = self.select()
-            p2 = self.select()
-            self.nextInd[i].crossover(self.ind[p1], self.ind[p2])
+            self.p1 = self.select()
+            self.p2 = self.select()
+            self.nextInd[i].crossover(self.ind[self.p1], self.ind[self.p2])
 
         for i in range(POP_SIZE):
             self.nextInd[i].mutate()
-            self.nextInd, ind = ind, nextInd
+            self.nextInd, self.ind = self.ind, self.nextInd
 
         self.evaluate()
 
     def select(self):
         denom = POP_SIZE * (POP_SIZE+1) / 2
-        r = ((random.rand() << 16) + \
-             (random.rand() << 1) + \
-             (random.rand() % 2)) % denom + 1
+        r = ((random.random() << 16) + \
+             (random.random() << 1) + \
+             (random.random() % 2)) % denom + 1
 
         for num in reversed(range(POP_SIZE)):
             if r <= num:
@@ -95,7 +95,7 @@ class Population():
         return ret
 
     def select_roulette(self):
-        r = random.rand()
+        r = random.random()
         for rank in range(1,POP_SIZE):
             prob = self.trFit[rank-1] / self.denom
             if r<= prob:
@@ -106,7 +106,7 @@ class Population():
 
     def select_ranking(self):
         denom = POP_SIZE * (POP_SIZE+1) / 2
-        r = random.rand() 
+        r = random.random() 
         for rank in range(1,POP_SIZE):
             prob = (POP_SIZE-rank+1) / denom
             if r<= prob:
@@ -134,15 +134,44 @@ class Individual():
     def __init__(self):
         self.chrom = [0]*N
         self.fitness = 0
+        for i in range(N):
+            self.chrom[i] = random.random() % 2
 
     def evaluate(self):
-        pass
+        self.fitness = 0
+        for i in range(N):
+            self.fitness += (self.chrom[i] * 2 - 1) * sqrt(i+1)
+        self.fitness = fabs(self.fitness)
 
-    def crossover(self,p1,p2):
-       pass
+    def crossover_one_point(self,p1,p2):
+        point = random.random() % (N-1)
+        for i in range(point):
+            self.chrom[i] = p1.chrom[i]
+            self.chrom[i] = p2.chrom[i]
+
+    def crossover_two_point(self, p1,p2):
+        point1 = random.random() % (N-1)
+        point2 = (point1+(random.random() % (N-2) +1)) % (N-1)
+        if point1<point2:
+            point1,point2 = point2,point1
+        for i in range(point1):
+            self.chrom[i] = p1.chrom[i]
+        for i in range(point1,point2):
+            self.chrom[i] = p2.chrom[i]
+        for i in range(point2,N):
+            self.chrom[i] = p1.chrom[i]
+
+    def crossover_uniform(self, p1,p2):
+        for i in range(N):
+            if (random.random() % 2) == 1:
+                self.hrom[i] = p1.chrom[i]
+            else:
+                self.chrom[i] = p2.chrom[i]
 
     def mutate():
-        pass
+        for i in range(N):
+            if random.random() < MUTATE_PROB:
+                self.chrom[i] = 1 - self.chrom[i]
     
 if __name__=="__main__":
     pop = Population()
