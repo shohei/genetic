@@ -47,7 +47,7 @@ class Population():
             self.ind[i].evaluate()
         fitnesses = np.array([ind.fitness for ind in self.ind])
         orders = (-1*fitnesses).argsort().argsort()
-        tmp = self.ind
+        tmp = self.ind.copy()
         for i,order in enumerate(orders):
             self.ind[order] = tmp[i] 
 

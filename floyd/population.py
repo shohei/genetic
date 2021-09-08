@@ -21,18 +21,10 @@ class Population():
         fitnesses = np.array([ind.fitness for ind in self.ind])
         orders = fitnesses.argsort()
         ranks = orders.argsort()
-        tmp = self.ind
+        tmp = self.ind.copy()
         for i,rank in enumerate(ranks):
             self.ind[rank] = tmp[i]
-        pdb.set_trace()
         # self.sort(0, POP_SIZE-1)
-
-        # self.quicksort(0, POP_SIZE-1)
-
-        # fitnesses = [ind.fitness for ind in self.ind]
-        # fitnesses.sort() 
-        # for i in range(POP_SIZE):
-        #     self.ind[i].fitness  = fitnesses[i]
 
     def sort(self, lb, ub):
         if lb < ub:
@@ -52,27 +44,6 @@ class Population():
 
             self.sort(lb, j)
             self.sort(i, ub)
-
-    def quicksort(self, left, right):
-        if((right-left) <=1):
-            return
-        pivot_index = (left+right)//2
-        pivot = self.ind[pivot_index].fitness
-        self.ind[pivot_index].fitness,\
-        self.ind[right-1].fitness = \
-            self.ind[right-1].fitness,self.ind[pivot_index].fitness
-        
-        i = left
-        for j in range(left,right-1):
-            if(self.ind[j].fitness<pivot):
-                self.ind[i].fitness,self.ind[j].fitness =\
-                     self.ind[j].fitness, self.ind[i].fitness
-                i+=1
-
-        self.ind[i].fitness,self.ind[right-1].fitness = \
-                self.ind[right-1].fitness,self.ind[i].fitness
-        self.quicksort(left,i)
-        self.quicksort(i+1,right)
 
     def alternate(self):
         #ルーレット選択のための処理
@@ -108,12 +79,6 @@ class Population():
 
         self.nextInd = self.ind
         self.evaluate()
-
-        self.std = np.std([ind.fitness for ind in self.ind])
-        min_ind = min([ind.fitness for ind in self.ind])
-        if self.ind[0].fitness != min_ind:
-            print("first ind",self.ind[0].fitness,"min_ind",min_ind)
-            print("sort algorithm not working")
 
     #select by order
     def select_ranking(self):

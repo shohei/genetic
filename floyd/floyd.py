@@ -11,8 +11,8 @@ if __name__=="__main__":
     y = []                 
     for i in range(GEN_MAX):
         pop.alternate()
-        print("Generation:{}, best fitness: {}, fitness std: {}" \
-                 .format(i,pop.ind[0].fitness,pop.std))
+        print("Generation:{}, best fitness: {}" \
+                 .format(i,pop.ind[0].fitness,))
         x.append(i)
         y.append(pop.ind[0].fitness)
         lines.set_data(x, y)
