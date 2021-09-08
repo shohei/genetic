@@ -1,6 +1,7 @@
 #conding: utf-8
 import random
 import sys
+import math
 
 GEN_MAX = 1000
 POP_SIZE = 1000
@@ -24,8 +25,8 @@ class Population():
 
     def sort(self, lb, ub):
         if lb < ub:
-            k = (lb+ub)/2
-            pivot = ind[k].fitness
+            k = (lb+ub)//2
+            pivot = self.ind[k].fitness
             i = lb
             j = ub
             while i <= j:
@@ -34,7 +35,7 @@ class Population():
                 if self.ind[i].fitness < pivot:
                     j+=1
                 if i<= j:
-                    ind[i], ind[j] = ind[j], ind[i]
+                    self.ind[i], self.ind[j] = self.ind[j], self.ind[i]
                     i+=1
                     j-=1
             self.sort(lb, j)
@@ -140,8 +141,8 @@ class Individual():
     def evaluate(self):
         self.fitness = 0
         for i in range(N):
-            self.fitness += (self.chrom[i] * 2 - 1) * sqrt(i+1)
-        self.fitness = fabs(self.fitness)
+            self.fitness += (self.chrom[i] * 2 - 1) * math.sqrt(i+1)
+        self.fitness = math.fabs(self.fitness)
 
     def crossover_one_point(self,p1,p2):
         point = random.random() % (N-1)
@@ -164,11 +165,11 @@ class Individual():
     def crossover_uniform(self, p1,p2):
         for i in range(N):
             if (random.random() % 2) == 1:
-                self.hrom[i] = p1.chrom[i]
+                self.chrom[i] = p1.chrom[i]
             else:
                 self.chrom[i] = p2.chrom[i]
 
-    def mutate():
+    def mutate(self):
         for i in range(N):
             if random.random() < MUTATE_PROB:
                 self.chrom[i] = 1 - self.chrom[i]
