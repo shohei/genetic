@@ -18,11 +18,13 @@ class Population():
     def evaluate(self):
         for i in range(POP_SIZE):
             self.ind[i].evaluate()
-        fitnesses = [ind.fitness for ind in self.ind]
-        orders = np.argsort(fitnesses)
+        fitnesses = np.array([ind.fitness for ind in self.ind])
+        orders = fitnesses.argsort()
+        ranks = orders.argsort()
         tmp = self.ind
-        for i,order in enumerate(orders):
-            self.ind[i] = tmp[order]
+        for i,rank in enumerate(ranks):
+            self.ind[rank] = tmp[i]
+        pdb.set_trace()
         # self.sort(0, POP_SIZE-1)
 
         # self.quicksort(0, POP_SIZE-1)

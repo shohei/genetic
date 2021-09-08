@@ -1,7 +1,8 @@
 import sys
 
 GEN_MAX = 1000
-POP_SIZE = 1000
+# POP_SIZE = 1000
+POP_SIZE = 100
 ELITE = 1
 MUTATE_PROB = 0.01
 N = 64 

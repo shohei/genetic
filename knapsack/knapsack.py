@@ -9,7 +9,8 @@ ws = [wv[0] for wv in wvs]
 vs = [wv[1] for wv in wvs]
 MAX_WEIGHT = 10
 GEN_MAX = 1000
-POP_SIZE = 1000
+#POP_SIZE = 1000
+POP_SIZE = 30 
 ELITE = 1
 MUTATE_PROB = 0.01
 N = 6
@@ -114,6 +115,9 @@ if __name__=="__main__":
             ax.set_ylim((min(y), max(y)))
             # ax.set_yscale('log')
             plt.pause(.01)
+        print('Result')
+        print("best: {}, solution: {}".format(best, solution))
+        exit()
     except KeyboardInterrupt:
         print('Result')
         print("best: {}, solution: {}".format(best, solution))
