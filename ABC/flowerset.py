@@ -23,9 +23,9 @@ class FlowerSet():
 
     def employedBeePhase(self):
         for i in range(EBEE_NUM):
-            newFlower.change(i)
-            if self.flower[i].value > newFlower.value:
-                newFlower, self.flower[i] = self.flower[i], newFlower
+            self.newFlower.change(i)
+            if self.flower[i].value > self.newFlower.value:
+                self.newFlower, self.flower[i] = self.flower[i], self.newFlower
             self.flower[i].visitNum += 1
 
     def onlookerBeePhase(self):
@@ -36,7 +36,7 @@ class FlowerSet():
                 if max < self.flower[i].value:
                     max = self.flower[i].value
                 if min > self.flower[i].value:
-                    min = self.flower[i].ValueError
+                    min = self.flower[i].value
             self.denom = 0.0
             for i in range(EBEE_NUM):
                 self.trValue[i] = (max-self.flower[i].value)/(max-min)
