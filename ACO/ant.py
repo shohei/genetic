@@ -1,5 +1,6 @@
 import random
-from variables import RAND_MAX, PHERO_Q
+from variables import RAND_MAX, PHERO_Q, PHERO_R
+import pdb
 
 class Ant():
     def __init__(self, argColony):
@@ -20,7 +21,7 @@ class Ant():
                     denom += self.colony.nume[self.route[i]][j]
             
             next = -1
-            if (denom!=0.0) and (random.random()<=PHERO_R):
+            if (denom!=0.0) & (random.random()<=PHERO_R):
                 r = random.random()
                 for next in range(1,self.colony.field.nodeNum):
                     if self.candidate[next]==1:
@@ -49,7 +50,7 @@ class Ant():
             
             self.route[self.colony.field.nodeNum-1] = next
             self.totalDis += self.colony.field.distance[ \
-                self.route[self.colony.field.nodeNum-2]]
+                self.route[self.colony.field.nodeNum-2]][next]
 
             self.totalDis += self.colony.field.distance[next][0]
 

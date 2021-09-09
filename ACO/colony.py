@@ -37,5 +37,5 @@ class Colony():
     def printPheromone(self):
         for i in range(self.field.nodeNum):
             for j in range(self.field.nodeNum):
-                print(self.field.pheromone[i][j],end='')
+                print("{:8.3f}".format(self.field.pheromone[i][j]),end=' ')
             print()
