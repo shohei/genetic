@@ -7,6 +7,6 @@ if __name__=="__main__":
         fSet.onlookerBeePhase()
         fSet.scoutBeePhase()
         fSet.saveBestPos()
-        print("Generation:{}, best fitness:{}"i,fSet.bestValue)
+        print("Generation:{}, best fitness:{}",i,fSet.bestValue)
     fSet.printResult()
 

@@ -1,6 +1,6 @@
 
 class Flower():
-    def __init__(self):
+    def __init__(self, afgFSet):
         pass
 
     def change(self, base):

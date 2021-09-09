@@ -1,7 +1,7 @@
 
 class Dataset():
     def __init__(self):
-        passs
+        pass
 
     def setCoef(self, sCoef):
         pass
