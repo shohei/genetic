@@ -1,4 +1,5 @@
 from swarm import Swarm
+from variables import TIME_MAX
 
 if __name__=="__main__":
     swarm = Swarm("sampledata.csv")
