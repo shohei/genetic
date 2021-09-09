@@ -3,7 +3,7 @@ from variables import REPEAT_NUM
 from colony import Colony
 
 if __name__=="__main__":
-    colony = Colony()
+    colony = Colony("sampledata.csv")
     for i in range(REPEAT_NUM):
         colony.selectRoute()
         colony.renewPheromone()

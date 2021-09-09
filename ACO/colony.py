@@ -1,14 +1,13 @@
 from ant import Ant 
 from field import Field
 from variables import ANT_NUM, PHERO_L, HEU_L, PHERO_R, EVA_R
+import numpy as np
 class Colony():
-    def __init__(self):
-        self.field = Field()
-        self.ant= [Ant()]*ANT_NUM
-        # for i in range(ANT_NUM):
-        #     self.ant[i] = Ant(self)
+    def __init__(self, filename):
+        self.field = Field(filename)
+        self.ant= [Ant(self)]*ANT_NUM
 
-        self.nume = [0.0]*self.field.nodeNum
+        self.nume = np.zeros((self.field.nodeNum,self.field.nodeNum)).tolist()
         # for i in range(self.field.nodeNum):
         #     self.nume[i] = [0.0]*self.field.nodeNum
 
@@ -24,7 +23,7 @@ class Colony():
                         (1/self.field.distance[i][j])**HEU_L
 
         for i in range(ANT_NUM):
-            self.ant[i].selecteRoute()
+            self.ant[i].selectRoute()
 
     def renewPheromone(self):
         for i in range(self.field.nodeNum):

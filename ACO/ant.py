@@ -8,7 +8,7 @@ class Ant():
         self.candidate = [0]*self.colony.field.nodeNum
         self.totalDis = 0.0
 
-    def selectRoute(self.):
+    def selectRoute(self):
         for i in range(self.colony.field.nodeNum):
             self.candidate[i] = 1
         
@@ -17,7 +17,7 @@ class Ant():
             denom = 0.0
             for j in range(self.colony.field.nodeNum):
                 if self.candidate[j]==1:
-                    denom += self.colony.nume[self.route[i][j]]
+                    denom += self.colony.nume[self.route[i]][j]
             
             next = -1
             if (denom!=0.0) and (random.random()<=PHERO_R):
