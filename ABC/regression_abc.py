@@ -1,4 +1,5 @@
 from flowerset import FlowerSet
+from variables import REPEAT_NUM
 
 if __name__=="__main__":
     fSet = FlowerSet("sampledata.csv")
