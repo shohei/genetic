@@ -13,9 +13,9 @@ class Colony():
 
     def selectRoute(self):
         for i in range(self.field.nodeNum):
-            for j in range(i):
+            for j in range(1,i):
                 self.nume[i][j] = \
-                    (self.field.pheromone[i][j])**PHERO_L * \
+                    (self.field.pheromone[j][i])**PHERO_L * \
                         (1/self.field.distance[i][j])**HEU_L
             for j in range(i+1,self.field.nodeNum):
                 self.nume[i][j] = \

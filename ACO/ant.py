@@ -10,19 +10,19 @@ class Ant():
         self.totalDis = 0.0
 
     def selectRoute(self):
-        for i in range(self.colony.field.nodeNum):
+        for i in range(1, self.colony.field.nodeNum):
             self.candidate[i] = 1
         
         self.totalDis = 0.0
         for i in range(self.colony.field.nodeNum-2):
             denom = 0.0
-            for j in range(self.colony.field.nodeNum):
+            for j in range(1, self.colony.field.nodeNum):
                 if self.candidate[j]==1:
                     denom += self.colony.nume[self.route[i]][j]
             
             next = -1
-            if (denom!=0.0) & (random.random()<=PHERO_R):
-                r = random.random()
+            r = random.random()
+            if (denom!=0.0) and (r<=PHERO_R):
                 for next in range(1,self.colony.field.nodeNum):
                     if self.candidate[next]==1:
                         prob = self.colony.nume[self.route[i]][next] / denom
@@ -44,17 +44,15 @@ class Ant():
             self.candidate[next] = 0
             self.totalDis += self.colony.field.distance[self.route[i]][next]
         
-            for next in range(1,self.colony.field.nodeNum):
-                if self.candidate[next]==1:
-                    break
+        for next in range(1,self.colony.field.nodeNum):
+            if self.candidate[next]==1:
+                break
             
-            self.route[self.colony.field.nodeNum-1] = next
-            self.totalDis += self.colony.field.distance[ \
-                self.route[self.colony.field.nodeNum-2]][next]
+        self.route[self.colony.field.nodeNum-1] = next
+        self.totalDis += self.colony.field.distance[ \
+            self.route[self.colony.field.nodeNum-2]][next]
 
-            self.totalDis += self.colony.field.distance[next][0]
-
-
+        self.totalDis += self.colony.field.distance[next][0]
 
     def putPheromone(self):
         p = PHERO_Q / self.totalDis
@@ -62,15 +60,9 @@ class Ant():
             if self.route[i]<self.route[i+1]:
                 self.colony.field.pheromone[self.route[i]][self.route[i+1]] += p
             else:
-                self.colony.field.pheromone[self.route[i]][self.route[i+1]] += p
+                self.colony.field.pheromone[self.route[i+1]][self.route[i]] += p
             
-            self.colony.field.pheromone[0][\
-                self.route[self.colony.field.nodeNum-1]]
-
-
-
-
-
-
+        self.colony.field.pheromone[0][\
+            self.route[self.colony.field.nodeNum-1]] += p
 
 
