@@ -45,6 +45,12 @@ class Dataset():
                 self.exSData[i][j] = (self.exData[i][j] - self.exAve[j]) / self.exSd[j]
             self.resSData[i] = (self.resData[i]-self.resAve) / self.resSd
         
+        # print("exAve")
+        # print(self.exAve)
+        # print("exSd")
+        # print(self.exSd)
+        # print("exSData")
+        # print(self.exSData)
         # print("exData")
         # print(self.exData)
         # print("resData")

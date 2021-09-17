@@ -1,6 +1,7 @@
 import random
 from variables import COEF_MIN, COEF_MAX, DBL_MAX
 from variables import ACCEL_G, ACCEL_P, INERTIA
+import pdb
 
 class Particle():
     def __init__(self, argSwarm):
@@ -13,6 +14,7 @@ class Particle():
 
         self.pBestPos = [0.0]*self.swarm.dataset.exVarNum
         self.pBestValue = DBL_MAX
+        self.value = 0.0
         self.evaluate()
     
     def move(self):
@@ -24,14 +26,16 @@ class Particle():
 
     def evaluate(self):
         self.value = 0.0
+        # print(self.value,self.pBestValue,end=",")
         for i in range(self.swarm.dataset.dataNum):
             diff = self.swarm.dataset.resSData[i]
             for j in range(self.swarm.dataset.exVarNum):
                 diff -= self.pos[j]*self.swarm.dataset.exSData[i][j]
-            self.value += diff**2.0
+            self.value += diff**2.0 
         if self.pBestValue > self.value:
+            print('update pBestValue')
             for i in range(self.swarm.dataset.exVarNum):
-                self.pBestPos[i] = self.pos[i]
+                _pos = self.pos.copy()
+                self.pBestPos[i] = _pos[i]
 
-            self.pBestValue = self.value
-
+            self.pBestValue = float(self.value)

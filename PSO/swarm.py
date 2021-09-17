@@ -1,6 +1,7 @@
 from dataset import Dataset
 from particle import Particle
-from variables import SWARM_SIZE
+from variables import SWARM_SIZE, DBL_MAX
+import pdb
 
 class Swarm():
     def __init__(self, filename):
@@ -14,7 +15,7 @@ class Swarm():
         self.gBestPos = [0.0]*self.dataset.exVarNum
         for i in range(self.dataset.exVarNum):
             self.gBestPos[i] = self.particle[self.best].pos[i]
-        self.gBestValue = self.particle[self.best].value
+        self.gBestValue = float(self.particle[self.best].value)
 
     def move(self):
         self.best = -1
@@ -26,7 +27,7 @@ class Swarm():
         if self.best != -1:
             for i in range(self.dataset.exVarNum):
                 self.gBestPos[i] = self.particle[self.best].pos[i]
-            self.gBestValue = self.particle[self.best].value
+            self.gBestValue = float(self.particle[self.best].value)
 
     def printResult(self):
         self.dataset.setCoef(self.gBestPos)
