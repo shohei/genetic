@@ -26,7 +26,7 @@ class Dataset():
             for j in range(self.exVarNum):
                 self.exData[i][j] = df.loc[i,j]
                 self.exAve[j] += self.exData[i][j]
-            self.resData[i] = df.loc[i,self.exVarNum-1]
+            self.resData[i] = df.loc[i,self.exVarNum]
             self.resAve += self.resData[i]
 
         for j in range(self.exVarNum):
@@ -44,6 +44,13 @@ class Dataset():
             for j in range(self.exVarNum):
                 self.exSData[i][j] = (self.exData[i][j] - self.exAve[j]) / self.exSd[j]
             self.resSData[i] = (self.resData[i]-self.resAve) / self.resSd
+        
+        # print("exData")
+        # print(self.exData)
+        # print("resData")
+        # print(self.resData)
+        # pdb.set_trace()
+
 
     def setCoef(self, sCoef):
         self.constant = self.resAve
