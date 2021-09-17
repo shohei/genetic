@@ -1,4 +1,5 @@
 #coding:utf-8
+import pdb
 from variables import REPEAT_NUM
 from colony import Colony
 import os
@@ -10,4 +11,6 @@ if __name__=="__main__":
         print(i)
         colony.selectRoute()
         colony.renewPheromone()
+        # if colony.field.pheromone[6][6] > 0:
+        #     pdb.set_trace()
     colony.printPheromone()

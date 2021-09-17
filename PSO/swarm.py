@@ -30,4 +30,4 @@ class Swarm():
 
     def printResult(self):
         self.dataset.setCoef(self.gBestPos)
-        self.printEquation()
+        self.dataset.printEquation()

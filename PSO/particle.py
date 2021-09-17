@@ -28,7 +28,6 @@ class Particle():
             diff = self.swarm.dataset.resSData[i]
             for j in range(self.swarm.dataset.exVarNum):
                 diff -= self.pos[j]*self.swarm.dataset.exSData[i][j]
-            
             self.value += diff**2.0
         if self.pBestValue > self.value:
             for i in range(self.swarm.dataset.exVarNum):
