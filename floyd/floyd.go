@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	GEN_MAX         int     = 10
+	GEN_MAX         int     = 1000
 	POP_SIZE        int     = 1000
 	ELITE           int     = 1
 	MUTATE_PROB     float64 = 0.01
@@ -61,7 +61,7 @@ func (p *Individual) Crossover_two_point(p1, p2 *Individual) {
 func (p *Individual) Mutate() {
 	for i := 0; i < N; i++ {
 		if rand.Float64() < MUTATE_PROB {
-			p.Chrom[i] = 1 - p.chrom[i]
+			p.Chrom[i] = 1 - p.Chrom[i]
 		}
 	}
 }
@@ -142,17 +142,31 @@ func (p *Population) Select_tournament() int {
 	return ret
 }
 
+func (p *Population) PrintResult() {
+	fmt.Print("Set A:")
+	for i := 0; i < N; i++ {
+		if p.Ind[0].Chrom[i] == 1 {
+			fmt.Printf("√%d", i+1)
+		}
+	}
+	fmt.Println()
+	fmt.Print("Set B:")
+	for i := 0; i < N; i++ {
+		if p.Ind[0].Chrom[i] == 0 {
+			fmt.Printf("√%d", i+1)
+		}
+	}
+	fmt.Println()
+	fmt.Printf("Difference: %f\n", p.Ind[0].Fitness)
+}
+
 func main() {
 	p := NewPopulation()
-	x := make([]int, 0)
-	y := make([]float64, 0)
 	for i := 0; i < GEN_MAX; i++ {
 		p.Alternate()
-		fmt.Printf("Generation:%d, best fitness: %f", i, p.ind[0].fitness)
-		x = append(x, i)
-		y = append(y, p.ind[0].fitness)
+		fmt.Printf("Generation:%d, best fitness: %f", i, p.Ind[0].Fitness)
+		fmt.Println(i)
 	}
-
-	p.printResult()
+	p.PrintResult()
 
 }
