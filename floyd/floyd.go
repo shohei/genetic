@@ -41,9 +41,35 @@ func (p *Individual) Evaluate() {
 	p.Fitness = math.Abs(fitness)
 }
 
+func (p *Individual) Crossover_two_point(p1, p2 *Individual) {
+	point1 := rand.Intn(RAND_MAX) % (N - 1)
+	point2 := (point1 + (rand.Intn(RAND_MAX)%(N-2) + 1)) % (N - 1)
+	if point1 < point2 {
+		point1, point2 = point2, point1
+	}
+	for i := 0; i < point1; i++ {
+		p.Chrom[i] = p1.Chrom[i]
+	}
+	for i := point1; i < point2; i++ {
+		p.Chrom[i] = p2.Chrom[i]
+	}
+	for i := point2; i < N; i++ {
+		p.Chrom[i] = p1.Chrom[i]
+	}
+}
+
+func (p *Individual) Mutate() {
+	for i := 0; i < N; i++ {
+		if rand.Float64() < MUTATE_PROB {
+			p.Chrom[i] = 1 - p.chrom[i]
+		}
+	}
+}
+
 type Population struct {
 	Ind     []*Individual
 	NextInd []*Individual
+	BestFit float64
 }
 
 func (p *Population) Evaluate() {
@@ -85,7 +111,7 @@ func (p *Population) Alternate() {
 	for i := ELITE; i < POP_SIZE; i++ {
 		p1 := p.Select_tournament()
 		p2 := p.Select_tournament()
-		p.NextInd[i].Crossover_two_point(p.ind[p1], p.ind[p2])
+		p.NextInd[i].Crossover_two_point(p.Ind[p1], p.Ind[p2])
 	}
 	for i := 0; i < POP_SIZE; i++ {
 		p.NextInd[i].Mutate()
@@ -94,9 +120,26 @@ func (p *Population) Alternate() {
 	p.Evaluate()
 }
 
-func (p *Population) Select_tournament() *Population {
-	newp := NewPopulation()
-	return newp
+func (p *Population) Select_tournament() int {
+	tmp := make([]int, N)
+	ret := -1
+	p.BestFit = FLT_MAX
+	num := 0
+	for {
+		r := rand.Intn(RAND_MAX) % N
+		if tmp[r] == 0 {
+			tmp[r] = 1
+			if p.Ind[r].Fitness < p.BestFit {
+				ret = r
+				p.BestFit = p.Ind[r].Fitness
+			}
+			num += 1
+			if num == TOURNAMENT_SIZE {
+				break
+			}
+		}
+	}
+	return ret
 }
 
 func main() {
