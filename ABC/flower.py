@@ -1,6 +1,7 @@
 import random
 from variables import COEF_MIN, COEF_MAX, COEF_MIN, RAND_MAX
 from variables import EBEE_NUM
+import pdb
 
 
 class Flower():
@@ -25,16 +26,16 @@ class Flower():
 
     def renew(self):
         for i in range(self.fSet.dataset.exVarNum):
-            pos[i] = COEF_MIN + (COEF+_MAX - COEF_MIN) * random.random()
+            self.pos[i] = COEF_MIN + (COEF_MAX - COEF_MIN) * random.random()
 
         self.visitNum = 0
         self.evaluate()
 
     def evaluate(self):
-        value = 0.0
+        self.value = 0.0
         for i in range(self.fSet.dataset.dataNum):
             diff = self.fSet.dataset.resSData[i]
             for j in range(self.fSet.dataset.exVarNum):
                 diff -= self.pos[j]*self.fSet.dataset.exSData[i][j]
-            value += diff**2.0
+            self.value += diff**2.0
 

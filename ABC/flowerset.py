@@ -5,16 +5,16 @@ from flower import Flower
 import random
 class FlowerSet():
     def __init__(self, filename):
-        dataset = Dataset(filename)
+        self.dataset = Dataset(filename)
         self.flower = [[]]*EBEE_NUM
         best = 0
         for i in range(EBEE_NUM):
             self.flower[i] = Flower(self)
-            if self.lower[best].value > self.flower[i].value:
+            if self.flower[best].value > self.flower[i].value:
                 best = i
 
-        self.bestPos = [0.0]*dataset.exVarNum
-        for i in range(dataset.exVarNum):
+        self.bestPos = [0.0]*self.dataset.exVarNum
+        for i in range(self.dataset.exVarNum):
             self.bestPos[i] = self.flower[best].pos[i]
 
         self.bestValue = self.flower[best].value
@@ -23,9 +23,9 @@ class FlowerSet():
 
     def employedBeePhase(self):
         for i in range(EBEE_NUM):
-            newFlower.change(i)
-            if self.flower[i].value > newFlower.value:
-                newFlower, self.flower[i] = self.flower[i], newFlower
+            self.newFlower.change(i)
+            if self.flower[i].value > self.newFlower.value:
+                self.newFlower, self.flower[i] = self.flower[i], self.newFlower
             self.flower[i].visitNum += 1
 
     def onlookerBeePhase(self):
@@ -36,7 +36,7 @@ class FlowerSet():
                 if max < self.flower[i].value:
                     max = self.flower[i].value
                 if min > self.flower[i].value:
-                    min = self.lower[i].ValueError
+                    min = self.flower[i].value
             self.denom = 0.0
             for i in range(EBEE_NUM):
                 self.trValue[i] = (max-self.flower[i].value)/(max-min)
@@ -53,7 +53,7 @@ class FlowerSet():
         if self.flower[i].value > self.newFlower.value:
             self.newFlower, self.flower[i] = self.flower[i], self.newFlower
         
-        self.lower[i].visitNum += 1
+        self.flower[i].visitNum += 1
 
     def scoutBeePhase(self):
         for i in range(EBEE_NUM):
@@ -66,7 +66,7 @@ class FlowerSet():
             if self.bestValue > self.flower[i].value:
                 best = i
         if best != -1:
-            for i in range(dataset.exVarNum):
+            for i in range(self.dataset.exVarNum):
                 self.bestPos[i] = self.flower[best].pos[i]
             self.bestValue = self.flower[best].value
 
